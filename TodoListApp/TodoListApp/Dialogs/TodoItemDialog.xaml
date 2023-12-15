@@ -1,0 +1,50 @@
+﻿<ContentDialog
+    x:Class="TodoListApp.Dialogs.TodoItemDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TodoListApp.Dialogs"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:viewmodels="using:TodoListApp.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewmodels:DialogViewModel}"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Add New Todo"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Header="Title" Text="{Binding Path=NewItem.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <TextBox Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 10"  Grid.Row="2" Header="Description" TextWrapping="Wrap" AcceptsReturn="True" Text="{Binding Path=NewItem.Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+            <ComboBox Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Grid.Row="3" Header="Priority" SelectedIndex="0" SelectedValue="{Binding Path=NewItem.Priority, Mode=TwoWay}" Margin="0,0,0,10">
+                <x:String>Low</x:String>
+                <x:String>Medium</x:String>
+                <x:String>High</x:String>
+            </ComboBox>
+            <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="0, 0,0,10" HorizontalAlignment="Center" Visibility="{Binding Path=ShowCheckBox, UpdateSourceTrigger=PropertyChanged}" IsChecked="{Binding IsAppointment, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Content="Is this an appointment?"></CheckBox>
+            <StackPanel Margin="0,0,0,15" Visibility="{Binding Path=ShowTask, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                <CalendarDatePicker Date="{Binding BoundDeadline, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" HorizontalAlignment="Stretch" Header="Deadline"></CalendarDatePicker>
+                <CheckBox IsChecked="{Binding Path=BoundIsCompleted, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">Is Completed</CheckBox>
+            </StackPanel>
+            <StackPanel Margin="0,0,0,15" Visibility="{Binding Path=ShowAppointment, UpdateSourceTrigger=PropertyChanged}" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2">
+                <CalendarDatePicker HorizontalAlignment="Stretch" Date="{Binding BoundStart, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Header="Start"></CalendarDatePicker>
+                <CalendarDatePicker HorizontalAlignment="Stretch" Date="{Binding BoundStop, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,10" Header="Stop"></CalendarDatePicker>
+                <TextBox Text="{Binding AttendeesString, Mode= TwoWay, UpdateSourceTrigger=PropertyChanged}" Header="Attendees (separate with commas)"></TextBox>
+            </StackPanel>
+            <Button Grid.Row="6" HorizontalAlignment="Stretch" Margin="0,0,5,0" Grid.Column="0" Click="Dialog_OkayBtnClick" Content="Okay"></Button>
+            <Button Grid.Row="6" HorizontalAlignment="Stretch" Margin="5,0,0,0" Grid.Column="1" Click="Dialog_CancelBtnClick" Content="Cancel"></Button>
+
+        </Grid>
+    </ScrollViewer>
+</ContentDialog>
